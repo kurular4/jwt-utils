@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import javax.crypto.SecretKey;
+import java.time.Duration;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
@@ -71,6 +73,19 @@ public class JwtUtil {
      */
     public static String createToken(String subject, Map<String, Object> claimMap, long duration, TimeUnit timeUnit, String secretKey) {
         return createToken(subject, claimMap, timeUnit.toMillis(duration), secretKey, SignatureAlgorithm.HS256);
+    }
+
+    /**
+     * Creates token from given parameters with default signature algorithm HS256
+     *
+     * @param subject   subject of the jwt
+     * @param claimMap  map containing claims to put in the token payload
+     * @param duration  how long it will take until expiration
+     * @param secretKey secret to sign token
+     * @return created token
+     */
+    public static String createToken(String subject, Map<String, Object> claimMap, Duration duration, String secretKey) {
+        return createToken(subject, claimMap, duration.toMillis(), secretKey, SignatureAlgorithm.HS256);
     }
 
     /**
