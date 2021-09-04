@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import javax.crypto.SecretKey;
+import java.time.Duration;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class JwtUtil {
     private static final String TOKEN_PREFIX = "Bearer ";
+    private static final String AUTHORIZATION_HEADER = "authorization";
 
     /**
      * Tests token for validity
@@ -73,6 +76,19 @@ public class JwtUtil {
     }
 
     /**
+     * Creates token from given parameters with default signature algorithm HS256
+     *
+     * @param subject   subject of the jwt
+     * @param claimMap  map containing claims to put in the token payload
+     * @param duration  how long it will take until expiration
+     * @param secretKey secret to sign token
+     * @return created token
+     */
+    public static String createToken(String subject, Map<String, Object> claimMap, Duration duration, String secretKey) {
+        return createToken(subject, claimMap, duration.toMillis(), secretKey, SignatureAlgorithm.HS256);
+    }
+
+    /**
      * Creates token from given parameters with given signature algorithm
      *
      * @param subject            subject of the jwt
@@ -117,5 +133,13 @@ public class JwtUtil {
      */
     public static Object getClaim(String token, String secretKey, String key) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get(key);
+    }
+
+    public static String getTokenPrefix() {
+        return TOKEN_PREFIX;
+    }
+
+    public static String getAuthorizationHeader() {
+        return AUTHORIZATION_HEADER;
     }
 }
