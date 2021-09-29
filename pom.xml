@@ -6,7 +6,7 @@
 
     <groupId>com.omer</groupId>
     <artifactId>jwt-utils</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
 
     <properties>
         <!-- dependency versions -->
