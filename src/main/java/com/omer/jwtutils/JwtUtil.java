@@ -79,6 +79,18 @@ public class JwtUtil {
      * Creates token from given parameters with default signature algorithm HS256
      *
      * @param subject   subject of the jwt
+     * @param duration  how long it will take until expiration
+     * @param secretKey secret to sign token
+     * @return created token
+     */
+    public static String createToken(String subject, Duration duration, String secretKey) {
+        return createToken(subject, Collections.emptyMap(), duration.toMillis(), secretKey, SignatureAlgorithm.HS256);
+    }
+
+    /**
+     * Creates token from given parameters with default signature algorithm HS256
+     *
+     * @param subject   subject of the jwt
      * @param claimMap  map containing claims to put in the token payload
      * @param duration  how long it will take until expiration
      * @param secretKey secret to sign token
