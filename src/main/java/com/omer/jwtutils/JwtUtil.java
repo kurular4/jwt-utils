@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit;
  * jjwt wrapper that contains methods to have better use of functions
  */
 public class JwtUtil {
-    private static final String TOKEN_PREFIX = "Bearer ";
-    private static final String AUTHORIZATION_HEADER = "authorization";
+    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final String AUTHORIZATION_HEADER = "authorization";
 
     /**
      * Tests token for validity
@@ -145,13 +145,5 @@ public class JwtUtil {
      */
     public static Object getClaim(String token, String secretKey, String key) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get(key);
-    }
-
-    public static String getTokenPrefix() {
-        return TOKEN_PREFIX;
-    }
-
-    public static String getAuthorizationHeader() {
-        return AUTHORIZATION_HEADER;
     }
 }
